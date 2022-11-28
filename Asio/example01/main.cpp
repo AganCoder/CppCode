@@ -20,8 +20,22 @@ int main(int argc, char** argv)
 
         // 打印当前服务器端口
         std::cout << "port: " << acceptor.local_endpoint().port() << std::endl;
-    } catch (...) {
-        std::cout << "server exceptional" << std::endl;
+
+        // 循环执行服务
+        while (true) {
+            // 一个临时的socket对象
+            boost::asio::ip::tcp::socket socket(ios);
+
+            // 阻塞等待客户端连接，连接成功后返回socket, accept这个函数使用引用来调取socket.
+            acceptor.accept(socket);
+
+            // 打印与本机服务器取得连接的客户端IP地址
+            std::cout << "client: " << socket.remote_endpoint().address() << std::endl;
+        }
+
+    } catch (std::exception& _e) {
+        std::cout << "server exceptional." << std::endl;
+		std::cout << _e.what() << std::endl;
     }
 
     std::cout << "server end." << std::endl;
