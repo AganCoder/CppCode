@@ -1,5 +1,6 @@
 #include <iostream>
 #include <boost/asio.hpp>
+#include <string>
 
 int main(int argc, char** argv)
 {
@@ -31,6 +32,18 @@ int main(int argc, char** argv)
 
             // 打印与本机服务器取得连接的客户端IP地址
             std::cout << "client: " << socket.remote_endpoint().address() << std::endl;
+
+            // 处理
+            std::string msg;
+            
+            // 阻塞发送作者名称到客户端
+            socket.write_some(boost::asio::buffer("hello"));
+
+            // 阻塞接收客户端发来的数据
+            socket.read_some(boost::asio::buffer(msg));
+
+            // 打印客户端发来的数据
+			std::cout << "client reply: " << msg.c_str() << std::endl;
         }
 
     } catch (std::exception& _e) {
