@@ -33,8 +33,8 @@ int main(int argc, char** argv)
             // 打印与本机服务器取得连接的客户端IP地址
             std::cout << "client: " << socket.remote_endpoint().address() << std::endl;
 
-            // 处理
-            std::string msg;
+            // 这边需要给 msg 一个长度
+            std::string msg(1000, '\0');
             
             // 阻塞发送作者名称到客户端
             socket.write_some(boost::asio::buffer("hello"));
