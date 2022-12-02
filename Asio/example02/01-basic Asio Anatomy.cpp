@@ -9,17 +9,17 @@ using namespace boost;
 int main(int argc, char** argv)
 {
     asio::io_context io_context;
-    asio::ip::tcp::socket socket(io_context);    
-
+    asio::ip::tcp::socket socket(io_context);
     boost::system::error_code ec;
-    cout <<"ec : "  << ec.message() << endl;
 
-    socket.connect(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 34567), ec);    
-
-    cout <<"ec2: " << ec << endl;
-
-    cout << "local port: " << socket.local_endpoint().port() << endl;
-
+    socket.connect(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 13569), ec);
+    if( ec )
+    {
+        cout << "connect error " << ec.message() << endl;
+        return EXIT_FAILURE;
+    }
+    cout << "local port: " << socket.local_endpoint().port() << endl;    
+    
     for(;;)
     {   
         // 如果使用 string, 一定要初始化大小
@@ -47,10 +47,9 @@ int main(int argc, char** argv)
         cin >> msg;
 
         socket.write_some(asio::buffer(msg));
-
     }
 
     socket.close();
-    
+
     return EXIT_SUCCESS;
 }
