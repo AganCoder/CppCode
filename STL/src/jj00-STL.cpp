@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace jjj00
+namespace jj00
 {
     void textSTL()
     {
