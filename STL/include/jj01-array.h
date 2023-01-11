@@ -3,7 +3,7 @@
 
 namespace jj01
 {
-    void test_array();
+    void testArray();
 }
 
 #endif // __JJO1_ARRAY__

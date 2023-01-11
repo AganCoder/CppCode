@@ -34,12 +34,12 @@ namespace utils
     }
 
     int compareString(const void* a, const void* b)
-    {
-        if (*(string *)a == *(string *)b)
-            return 1;
+    {        
+        if (*(string *)a == *(string *)b)        
+            return 0;            
         else if (*(string *)a < *(string *)b)
             return -1;
         else 
-            return 0;
+            return 1;            
     }
 }

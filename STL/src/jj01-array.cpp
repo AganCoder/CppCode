@@ -11,9 +11,9 @@ using namespace utils;
 
 namespace jj01
 {
-    void test_array()
+    void testArray()
     {
-        cout << "\ntest_array() ......." << endl;
+        cout << "\ntest array() ......." << endl;
 
         srand(time(NULL));
 
