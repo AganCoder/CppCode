@@ -1,16 +1,16 @@
-#include "jj04-forwardlist.h"
+#include "jj05-deque.h"
 #include <iostream>
-#include <forward_list>
+#include <deque>
 #include "utils.h"
 
 using namespace std;
 using namespace utils;
 
-void jj04::testForwardlist(long value) 
+void jj05::testDeque(long value) 
 {
-    cout << "\ntest forward_list() ......." << endl;
+    cout << "\ntest queue() ......." << endl;
 
-    forward_list<string> c;
+    deque<string> c;
     char buf[10];
 
     clock_t timeStart = clock();
@@ -26,10 +26,10 @@ void jj04::testForwardlist(long value)
     }
 
     cout << "milli-seconds:" << ( clock() - timeStart ) << endl;
-    // cout << "list.size() = " << c.size() << endl;
-    cout << "forward_list.max_size = " << c.max_size() << endl;
-    cout << "list.front() = " << c.front() << endl;
-    // cout << "list.back() = " << c.back() << endl;
+    cout << "deque.size() = " << c.size() << endl;
+    cout << "deque.max_size = " << c.max_size() << endl;
+    cout << "deque.front() = " << c.front() << endl;
+    cout << "deque.back() = " << c.back() << endl;
 
     string target = get_a_target_string();
 
@@ -47,7 +47,7 @@ void jj04::testForwardlist(long value)
     }
 
     timeStart = clock();
-    c.sort();
-    cout << "c.sort(), milli-seconds: " << (clock() - timeStart) << endl;
+    ::sort(c.begin(), c.end());
+    cout << "::sort(), milli-seconds: " << (clock() - timeStart) << endl;
 }
 
