@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <vector>
 
+// 主要使用 C++11 可以使用的 API (16/37)
+// https://en.cppreference.com/w/cpp/algorithm
+
 using namespace std;
 
 int main(int argc, char **argv)
