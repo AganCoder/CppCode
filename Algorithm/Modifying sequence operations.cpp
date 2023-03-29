@@ -1,8 +1,10 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <list>
+#include <random>
 
-// 主要使用 C++11 可以使用的 API (/63)
+// 主要使用 C++11 可以使用的 API (30/63)
 // https://en.cppreference.com/w/cpp/algorithm
 
 using namespace std;
@@ -197,6 +199,111 @@ int main(int argc, char **argv)
         std::cout << std::endl;
     }
     
+    // 20. swap 交换
+    // 22. iter_swap 互换两个迭代器指向地址内容
+    {
+        std::vector<int> v1 {5, 4, 3, 3, 2, 2, 1};
+        std::swap(v1[0], v1[1]);
+        std::copy(v1.cbegin(), v1.cend(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+    }
+
+    // 21. swap_ranges 交换范围
+    {
+        std::vector<char> v = {'a', 'b', 'c', 'd', 'e'};
+        std::list<char> l = {'1', '2', '3', '4', '5'};
+
+        std::swap_ranges(v.begin(), v.begin() + 3, l.begin()); //换三个
+        std::copy(v.cbegin(), v.cend(), std::ostream_iterator<char>(std::cout, " "));
+        std::cout << std::endl;
+        std::copy(l.cbegin(), l.cend(), std::ostream_iterator<char>(std::cout, " "));
+        std::cout << std::endl;
+    }
+
+    // 23. reverse: 将集合翻转，会直接更改掉对应的集合
+    // 24. reverse_copy： 会 copy 一份，不会改掉原来的集合 // C++17
+    {
+        std::vector<int> v1 {5, 4, 3, 3, 2, 2, 1};
+        std::reverse(v1.begin(), v1.end()); 
+        std::cout << "reverse: v1 = ";
+        std::copy(v1.begin(), v1.end(), std::ostream_iterator<int>(std::cout, " ")); // 1 2 2 3 3 4 5
+        std::cout << std::endl;
+
+        std::vector<int> v2 = v1; 
+        std::fill(v2.begin(), v2.end(), 0);
+        std::reverse_copy(v1.begin(), v1.end(), v2.begin());
+        std::cout << "reverse_copy: v1 = ";
+        std::copy(v1.begin(), v1.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+        std::cout << "reverse_copy: v2 = ";
+        std::copy(v2.begin(), v2.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+    }
+
+    // 25. rotate 旋转,会更改原来的集合
+    // 26. rotate_copy： 不会更改原来的集合
+    {
+        std::vector<int> v1 {5, 4, 3, 3, 2, 2, 1};
+        std::vector<int> v2 = v1;
+        std::rotate_copy(v1.begin(), v1.begin() + 2, v1.end(), v2.begin());
+
+        std::cout << "rotate_copy: v1 = ";
+        std::copy(v1.begin(), v1.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+
+        std::cout << "rotate_copy: v2 = ";
+        std::copy(v2.begin(), v2.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+
+        std::rotate(v1.begin(), v1.begin() + 2, v1.end());
+        std::cout << "rotate: v1 = ";
+        std::copy(v1.begin(), v1.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+    }
+
+    // 27. std::shuffle: 打乱集合顺序，推荐使用这个用法
+    // 28. std::random_shuffle, 不推荐使用
+    {    
+        std::vector<int> v1 {1, 1, 2, 2, 3, 3, 4, 4, 5};
+
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(v1.begin(), v1.end(), g);
+
+        std::cout << "shuffle: v1 = ";
+        std::copy(v1.begin(), v1.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+    }
+
+    // 29.sample 随机采样指定的个数, C++17
+    {
+        std::string in = "ABCDEFGHIJK", out;
+        std::sample(in.begin(), in.end(), std::back_inserter(out), 4,
+                std::mt19937{std::random_device{}()});
+
+        std::cout << "shuffle: out = " << out << std::endl;
+    }
+
+    // 30. unique 以及 unique_copy： 唯一,
+    {
+        std::vector<int> v1 {1, 1, 2, 2, 3, 3, 4, 4, 5};
+        std::vector<int> v2;
+
+        // 此处需要 resize 大小
+        v2.resize(v1.size());
+        v2.erase(std::unique_copy(v1.cbegin(), v1.cend(), v2.begin()), v2.end()); // 1 2 3 4 5
+        std::cout << "unique_copy v2 = ";
+        std::copy(v2.begin(), v2.end(), std::ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
+
+        std::cout << "copy v2 = ";
+        v1.erase(std::unique(v1.begin(), v1.end()), v1.end());
+        std::copy(v1.begin(), v1.end(), std::ostream_iterator<int>(std::cout, " ")); // 1 2 3 4 5 
+        std::cout << std::endl;
+    }
+
+
 
     return EXIT_SUCCESS;
 }
