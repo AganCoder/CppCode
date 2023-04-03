@@ -66,7 +66,16 @@ int main(int argc, char **argv)
         std::cout << std::endl;
     }
 
-    // 5. partition_point: 值得是 partition 的 last
-
+    // 5. partition_point: 找到已分好组的数据找到某个分界点
+    {
+        std::vector<int> v1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        std::vector<int>::iterator it = partition_point(v1.begin(), v1.end(), [](int & i) { return i < 4; });
+        
+        std::cout << "partition_point: ";
+        std::copy(v1.begin(), it, std::ostream_iterator<int>(std::cout, " "));
+        std::cout << " * ";
+        std::copy(it, v1.end(), std::ostream_iterator<int>(std::cout, " ")); // 5 3 7 1 9
+        std::cout << std::endl;
+    }
 
 }
